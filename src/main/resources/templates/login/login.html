@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вход</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #333;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 36px;
+        }
+
+        .form-container {
+            border-radius: 10px;
+            text-align: left;
+            width: 500px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            color: #fff;
+            font-size: 21px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            font-size: 24px;
+            box-sizing: border-box;
+        }
+
+        .btn-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .btn {
+            padding: 15px 40px;
+            background-color: #007BFF;
+            color: #fff;
+            text-decoration: none;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: background-color 0.3s ease-in-out;
+            width: 400px;
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        label {
+            font-size: 18px;
+        }
+
+        .instruction {
+            margin-top: 20px;
+            font-size: 21px;
+            color: #007BFF;
+            text-align: left;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        .show-instruction {
+            opacity: 1;
+        }
+
+        .admin-text {
+            color: #fff;
+        }
+
+        .admin-text-blue {
+            color: #007BFF;
+        }
+
+
+        .popup-message {
+            position: absolute;
+            background-color: #333;
+            color: #ff0000;
+            padding: 10px;
+            border-radius: 5px;
+            top: 60px;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.5s ease-in-out;
+            font-size: 24px;
+        }
+
+        .show-popup {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .error-message {
+            position: absolute;
+            background-color: #ff0000;
+            color: #fff;
+            padding: 10px;
+            border-radius: 5px;
+            top: 60px;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+            font-size: 24px;
+        }
+
+        .show-error-message {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translateX(-50%) translateY(0);
+
+    </style>
+</head>
+<body>
+<div class="container">
+    <p id="errorMessage" class="error-message"></p>
+    <h1>Вход</h1>
+    <div class="form-container">
+        <form action="/" method="post" id="loginForm">
+            <div class="form-group">
+                <label class="form-label" for="email">Почта:</label>
+                <input type="email" id="email" name="email" class="form-input" required>
+            </div>
+            <div class="form-group">
+                <label class="form-label" for="password">Пароль:</label>
+                <input type="password" id="password" name="password" class="form-input" required>
+            </div>
+            <div class="btn-container">
+                <button type="submit" class="btn">Войти</button>
+                <button type="button" class="btn" id="infoButton" onclick="showAdminInfo()">Подсказка (при первом
+                    входе)
+                </button>
+                <p class="instruction" id="infoMessage">
+                    <span class="admin-text">Почта: <span class="admin-text-blue">"admin@admin.com"</span></span><br>
+                    <span class="admin-text">Пароль: <span class="admin-text-blue">"admin"</span></span>
+                </p>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    function showAdminInfo() {
+        var instruction = document.querySelector(".instruction");
+        instruction.classList.add("show-instruction");
+
+        setTimeout(function () {
+            instruction.classList.remove("show-instruction");
+        }, 3000);
+    }
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.has("error")) {
+            var errorMessage = document.getElementById("errorMessage");
+            errorMessage.textContent = "Неправильный логин или пароль";
+
+            setTimeout(function () {
+                errorMessage.classList.add("show-error-message");
+            }, 10);
+
+            setTimeout(function () {
+                errorMessage.classList.remove("show-error-message");
+            }, 3000);
+        }
+    });
+</script>
+</body>
+</html>

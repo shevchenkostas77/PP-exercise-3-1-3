@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Регистрация пользователя</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #333;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 36px;
+        }
+
+        .form-container {
+            border-radius: 10px;
+            text-align: left;
+            width: 500px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            color: #fff;
+            font-size: 21px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            font-size: 24px;
+            box-sizing: border-box;
+            height: 43px;
+            width: 100%;
+        }
+
+        .btn-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .btn {
+            padding: 15px 40px;
+            background-color: #007BFF;
+            color: #fff;
+            text-decoration: none;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: background-color 0.3s ease-in-out;
+            width: 400px;
+            font-size: 18px;
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
+        }
+
+        input[type="text"],
+        input[type="email"] {
+            font-size: 16px;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+
+        label {
+            font-size: 18px;
+        }
+
+        .logout-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            padding: 10px 15px;
+            background-color: #ff0000;
+            color: #fff;
+            text-decoration: none;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        .logout-button:hover {
+            background-color: #cc0000;
+            color: #fff;
+        }
+
+        .checkbox-group label {
+            display: block;
+            position: relative;
+            padding-left: 30px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            color: #fff;
+            font-size: 21px;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+
+        .checkbox-group .checkmark {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 20px;
+            width: 20px;
+            background-color: #333;
+            border: 1px solid #fff;
+            border-radius: 3px;
+        }
+
+        .checkbox-group label:hover .checkmark {
+            background-color: #007BFF;
+        }
+
+        .checkbox-group input[type="checkbox"]:checked + .checkmark {
+            background-color: #007BFF;
+        }
+
+        .checkbox-group .checkmark:after {
+            content: "";
+            position: absolute;
+            display: none;
+        }
+
+        .checkbox-group input[type="checkbox"]:checked + .checkmark:after {
+            display: block;
+        }
+
+        .checkbox-group .checkmark:after {
+            left: 6px;
+            top: 2px;
+            width: 4px;
+            height: 9px;
+            border: solid #fff;
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <a th:href="@{/logout}" class="logout-button">Выход</a>
+    <h1>Регистрация пользователя</h1>
+    <div class="form-container">
+        <form th:action="@{/admin/}" method="post">
+            <div class="form-group">
+                <label class="form-label" for="name">Имя:</label>
+                <input type="text" id="name" name="name" class="form-input" required>
+            </div>
+            <div class="form-group">
+                <label class="form-label" for="lastName">Фамилия:</label>
+                <input type="text" id="lastName" name="lastName" class="form-input" required>
+            </div>
+            <div class="form-group">
+                <label class="form-label" for="email">Электронная почта:</label>
+                <input type="email" id="email" name="email" class="form-input" required>
+            </div>
+            <div class="form-group">
+                <label class="form-label" for="password">Пароль:</label>
+                <input type="password" id="password" name="password" class="form-input" required>
+            </div>
+            <div class="form-group">
+                <label th:for="selectedRoles">Роли:</label>
+                <div th:each="role : ${allRoles}">
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" th:id="'role_' + ${role.id}"
+                               th:name="selectedRoles" th:value="${role.id}">
+                        <label class="form-check-label" th:for="'role_' + ${role.id}" th:text="${role.name}"></label>
+                    </div>
+                </div>
+            </div>
+            <div class="btn-container">
+                <button type="submit" class="btn">Зарегистрировать</button>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+</html>
